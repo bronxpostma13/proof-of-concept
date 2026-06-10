@@ -1,0 +1,52 @@
+{% render 'partials/head.liquid' %}
+
+
+<a href="#pokemon-grid" class="skip-link">Ga naar inhoud</a>
+
+<section class="app">
+
+  <!-- ── Sidebar ── -->
+ 
+  {% render 'partials/sidebar.liquid' %}
+
+  <!-- ── Main ── -->
+  <main id="main-content" aria-label="Pokédex">
+<p>{{ pokemon.name }}</p>
+    <!-- Toolbar (desktop) -->
+    <section class="toolbar" aria-label="Zoeken en filteren">
+      <label>
+        <span class="visually-hidden">Zoek Pokémon</span>
+        <input type="search" placeholder="Search..." aria-label="Zoek Pokémon" />
+      </label>
+      <button class="favourite-toggle" aria-label="Toon alleen favorieten">★</button>
+    </section>
+
+    <!-- Pokémon grid -->
+    <section aria-label="Pokémon lijst">
+      <ol class="pokemon-grid" id="pokemon-grid">
+
+       
+      
+         {%   for pokemon in pokemons %}
+         <li>
+          <article class="pokemon-card">
+            <figure>
+              <img src="{{ pokemon.sprite }}" alt="" width="70" height="70" loading="lazy" >
+            </figure>
+            <h3>{{ pokemon.name }}</h3>
+            <ul class="types" aria-label="Types">
+              {% for type in pokemon.types %}
+
+              <li><span class="type-badge" data-type="{{ type }}" >{{ type }}</span></li>
+              
+              {% endfor %}
+            </ul>
+          </article>
+        </li>
+               {% endfor %}
+      </ol>
+    </section>
+
+  </main>
+</section>
+{% render 'partials/foot.liquid' %}
