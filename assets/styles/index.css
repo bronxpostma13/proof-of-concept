@@ -1,0 +1,299 @@
+:root {
+      --red:        #cc0000;
+      --red-dark:   #9b0000;
+      --red-light:  #e53935;
+      --grey-bg:    #1a1a2e;
+      --card-bg:    #2e2e42;
+      --card-hover: #3a3a54;
+      --text:       #f0f0f0;
+      --text-muted: #a0a0b8;
+      --star:       #f5c518;
+      --radius:     10px;
+      --font-pixel: 'Press Start 2P', monospace;
+      --font-body:  'Nunito', sans-serif;
+
+      /* type colours */
+      --grass:    #4caf50;
+      --poison:   #9c27b0;
+      --fire:     #ff6d00;
+      --water:    #1565c0;
+      --flying:   #5c6bc0;
+      --normal:   #9e9e9e;
+      --electric: #ceb64b;
+      --psychic:  #e91e63;
+      --bug:      #8bc34a;
+      --rock:     #795548;
+      --ground:   #ff8f00;
+      --ice:      #80deea;
+      --dragon:   #6a1b9a;
+      --ghost:    #4527a0;
+      --dark:     #37474f;
+      --steel:    #607d8b;
+      --fairy:    #f48fb1;
+      --fighting: #9e2b2b;
+    }
+
+    /* ─── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--grey-bg);
+      color: var(--text);
+      min-height: 100svh;
+    }
+
+    /* ─── Skip link (a11y) ───────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--red);
+      color: #fff;
+      padding: .5rem 1rem;
+      border-radius: var(--radius);
+      font-family: var(--font-pixel);
+      font-size: .7rem;
+      z-index: 9999;
+      text-decoration: none;
+
+      &:focus { top: 1rem; }
+    }
+
+    /* ─── App shell ──────────────────────────────────────── */
+    .app {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100svh;
+
+      @media (min-width: 768px) {
+        grid-template-columns: 220px 1fr;
+        grid-template-rows: 1fr;
+      }
+    }
+
+    /* ─── Sidebar ────────────────────────────────────────── */
+    .sidebar {
+      background: var(--red);
+      display: flex;
+      flex-direction: column;
+       
+      & header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1rem;
+        background: var(--red-dark);
+
+        & h1 {
+          font-family: var(--font-pixel);
+          font-size: 1rem;
+          color: #fff;
+          letter-spacing: .05em;
+        }
+      }
+
+      & nav {
+        @media (min-width: 768px) {
+          flex: 1;
+        }
+
+        & ul {
+          list-style: none;
+          padding: .5rem 0;
+          
+        }
+        & li {
+          list-style:none;
+        }
+
+        & li a {
+          display: block;
+          color: #fff;
+          font-family: var(--font-pixel);
+          font-size: .7rem;
+          text-decoration: none;
+          padding: .85rem 1.25rem;
+          border-left: 4px solid transparent;
+          transition: background .15s, border-color .15s;
+          
+
+          &:hover, &:focus-visible {
+            background: rgba(0,0,0,.2);
+            outline: none;
+          }
+
+          &[aria-current="page"] {
+            background: var(--red-dark);
+            border-left-color: #fff;
+          }
+        }
+      }
+    }
+
+    /* ─── Main content area ──────────────────────────────── */
+    main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      /* ── Toolbar (search + favourite) ── */
+      & .toolbar {
+        display: none;
+        align-items: center;
+        gap: .75rem;
+        padding: .75rem 1rem;
+        background: var(--card-bg);
+        border-bottom: 2px solid var(--red-dark);
+
+        @media (min-width: 768px) { display: flex; }
+
+        & label {
+          flex: 1;
+
+          & span.visually-hidden {
+            position: absolute;
+            width: 1px; height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+          }
+
+          & input[type="search"] {
+            width: 100%;
+            padding: .5rem .75rem;
+            background: var(--grey-bg);
+            border: 2px solid transparent;
+            border-radius: var(--radius);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: .9rem;
+            transition: border-color .15s;
+
+            &::placeholder { color: var(--text-muted); }
+
+            &:focus {
+              outline: none;
+              border-color: var(--red-light);
+            }
+          }
+        }
+
+        & button.favourite-toggle {
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: var(--text-muted);
+          transition: color .15s, transform .15s;
+          line-height: 1;
+
+          &:hover { color: var(--star); transform: scale(1.2); }
+          &:focus-visible { outline: 2px solid var(--red-light); border-radius: 4px; }
+        }
+      }
+
+      /* ── Pokémon grid ── */
+      & .pokemon-grid {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: .75rem;
+        align-content: start;
+
+        @media (min-width: 768px) {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          padding: 1.25rem;
+        }
+
+        @media (min-width: 1100px) {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    }
+
+    /* ─── Pokémon card ───────────────────────────────────── */
+    article.pokemon-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: .75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      transition: background .15s, transform .15s, box-shadow .15s;
+
+      &:hover, &:focus-within {
+        background: var(--card-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,.4);
+      }
+
+      & figure {
+        width: 80px;
+        height: 80px;
+        background: var(--grey-bg);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        & img {
+          width: 70px;
+          height: 70px;
+          object-fit: contain;
+          image-rendering: pixelated;
+        }
+      }
+
+      & h3 {
+        font-size: .8rem;
+        font-weight: 700;
+        font-family: var(--font-pixel);
+        text-align: center;
+        color: var(--text);
+      }
+
+      & .types {
+        display: flex;
+        gap: .3rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        list-style: none;
+
+        & .type-badge {
+          font-size: .55rem;
+          font-family: var(--font-pixel);
+          padding: .25em .6em;
+          border-radius: 50px;
+          color: #fff;
+          text-transform: lowercase;
+        }
+      }
+    }
+    ol{
+    list-style:none;}
+
+    /* ─── Type badge colours ─────────────────────────────── */
+    .type-badge[data-type="grass"]    { background: var(--grass);              }
+    .type-badge[data-type="poison"]   { background: var(--poison);             }
+    .type-badge[data-type="fire"]     { background: var(--fire);               }
+    .type-badge[data-type="water"]    { background: var(--water);              }
+    .type-badge[data-type="flying"]   { background: var(--flying);             }
+    .type-badge[data-type="normal"]   { background: var(--normal);             }
+    .type-badge[data-type="electric"] { background: var(--electric);  }
+    .type-badge[data-type="psychic"]  { background: var(--psychic);            }
+    .type-badge[data-type="bug"]      { background: var(--bug);       }
+    .type-badge[data-type="rock"]     { background: var(--rock);               }
+    .type-badge[data-type="ground"]   { background: var(--ground);    }
+    .type-badge[data-type="ice"]      { background: var(--ice);       }
+    .type-badge[data-type="dragon"]   { background: var(--dragon);             }
+    .type-badge[data-type="ghost"]    { background: var(--ghost);              }
+    .type-badge[data-type="dark"]     { background: var(--dark);               }
+    .type-badge[data-type="steel"]    { background: var(--steel);              }
+    .type-badge[data-type="fairy"]    { background: var(--fairy);     }
+    .type-badge[data-type="fighting"] { background: var(--fighting);     }
