@@ -1,0 +1,17 @@
+{%   for pokemon in pokemons %}
+         <li>
+          <article class="pokemon-card">
+            <figure>
+              <img src="{{ pokemon.sprite }}" alt="" width="70" height="70" loading="lazy" >
+            </figure>
+            <h3>{{ pokemon.name }}</h3>
+            <ul class="types" aria-label="Types">
+              {% for type in pokemon.types %}
+
+              <li><span class="type-badge" data-type="{{ type }}" >{{ type }}</span></li>
+              
+              {% endfor %}
+            </ul>
+          </article>
+        </li>
+               {% endfor %}
