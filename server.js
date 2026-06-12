@@ -34,10 +34,18 @@ const pokemonResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151
     })
   )
 
+  
+
+
 // Maak een GET route voor de index
 app.get('/', async function (request, response) {
  
   response.render('index.liquid', { pokemons })
+})
+
+app.get('/detail', async function (request, response) {
+ 
+  response.render('detail.liquid', { pokemons })
 })
 
 // Stel de poort in
