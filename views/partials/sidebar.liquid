@@ -1,25 +1,26 @@
 <aside class="sidebar" aria-label="Regio navigatie">
-  <header>
-    <h1>regions</h1>
-    
-    <button class="hamburger-menu" aria-label="Menu openen" aria-expanded="false">
-      <span class="line"></span>
-      <span class="line"></span>
-      <span class="line"></span>
-    </button>
-  </header>
+ <header>
+  {% if page == 'favorites' %}
+  <a href="/" class="back-link" aria-label="Terug naar overzicht">←</a>
+  {% endif %}
+  <h1>regions</h1>
+  <button class="hamburger-menu" aria-label="Menu openen" aria-expanded="false">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </button>
+</header>
   
   <nav aria-label="Pokémon regio's">
     <ul role="list">
-      <li><a href="/" aria-current="page">Kanto</a></li>
-      <li><a href="/johnto">Johto</a></li>
-      <li><a href="#">Hoenn</a></li>
-      <li><a href="#">Sinnoh</a></li>
-      <li><a href="#">Unova</a></li>
-      <li><a href="#">Kalos</a></li>
-      <li><a href="#">Alola</a></li>
-      <li><a href="#">Galar</a></li>
-      <li><a href="#">Paldea</a></li>
+      <li><a href="#" data-region-filter="kanto" aria-current="page">Kanto</a></li>
+      <li><a href="#" data-region-filter="johto">Johto</a></li>
+       <li><a href="#" data-region-filter="hoenn">Hoenn</a></li>
+      <li><a href="#" data-region-filter="sinnoh">Sinnoh</a></li>
+      <li><a href="#" data-region-filter="unova">Unova</a></li>
+      <li><a href="#" data-region-filter="kalos">Kalos</a></li>
+      <li><a href="#" data-region-filter="alola">Alola</a></li>
+      
     </ul>
   </nav>
 </aside>

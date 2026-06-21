@@ -1,3 +1,57 @@
 {% render 'partials/head.liquid' %}
+<a href="#detail-content" class="skip-link">Ga naar inhoud</a>
+<section class="detail-page">
+  <header class="detail-header">
+  <a href="/" class="back-link" aria-label="Terug naar overzicht">←</a>
+  <h1 style="view-transition-name: pokemon-name-{{ pokemon.id }}">{{ pokemon.name }} <span class="dex-number">#{{ pokemon.dex }}</span></h1>
+  
+</header>
 
+  <figure class="detail-sprite">
+  <img src="{{ pokemon.sprite }}" alt="" width="180" height="180" loading="lazy" style="view-transition-name: pokemon-image-{{ pokemon.id }}">
+</figure>
+  <ul class="types" aria-label="Types">
+    {% for type in pokemon.types %}
+    <li><span class="type-badge" data-type="{{ type }}">{{ type }}</span></li>
+    {% endfor %}
+  </ul>
+
+  <div class="tabs">
+    <nav class="tab-nav" aria-label="Pokémon informatie">
+      <ul role="list">
+        <li><a href="#about" data-tab="about" aria-current="page">About</a></li>
+        <li><a href="#stats" data-tab="stats">Stats</a></li>
+        <li><a href="#evolution" data-tab="evolution">Evolution</a></li>
+      </ul>
+    </nav>
+
+    <div class="tab-panels" id="detail-content">
+      <section class="tab-panel" id="about" data-tab-panel="about">
+        <p>{{ pokemon.description }}</p>
+      </section>
+
+      <section class="tab-panel" id="stats" data-tab-panel="stats" hidden>
+        <dl class="stat-list">
+          {% for stat in pokemon.stats %}
+          <div class="stat-row">
+            <dt>{{ stat.name }}</dt>
+            <dd>{{ stat.value }}</dd>
+          </div>
+          {% endfor %}
+        </dl>
+      </section>
+
+      <section class="tab-panel" id="evolution" data-tab-panel="evolution" hidden>
+        <ul class="evolution-list" role="list">
+          {% for evo in pokemon.evolutions %}
+          <li class="evolution-card">
+            <img src="{{ evo.sprite }}" alt="" width="80" height="80" loading="lazy">
+            <span>{{ evo.name }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+  </div>
+</section>
 {% render 'partials/foot.liquid' %}
