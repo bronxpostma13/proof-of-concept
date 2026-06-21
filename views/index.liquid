@@ -3,11 +3,37 @@
 
 <a href="#pokemon-grid" class="skip-link">Ga naar inhoud</a>
 
-<section class="app">
+<section class="app" data-page="{{ page | default: 'index' }}">
 
   <!-- ── Sidebar ── -->
  
-  {% render 'partials/sidebar.liquid' %}
+ 
+   <aside class="sidebar" aria-label="Regio navigatie">
+ <header>
+  {% if page == 'favorites' %}
+  <a href="/" class="back-link" aria-label="Terug naar overzicht">←</a>
+  {% endif %}
+  <h1>regions</h1>
+  <button class="hamburger-menu" aria-label="Menu openen" aria-expanded="false">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </button>
+</header>
+  
+  <nav aria-label="Pokémon regio's">
+    <ul role="list">
+      <li><a href="#" data-region-filter="kanto" aria-current="page">Kanto</a></li>
+      <li><a href="#" data-region-filter="johto">Johto</a></li>
+       <li><a href="#" data-region-filter="hoenn">Hoenn</a></li>
+      <li><a href="#" data-region-filter="sinnoh">Sinnoh</a></li>
+      <li><a href="#" data-region-filter="unova">Unova</a></li>
+      <li><a href="#" data-region-filter="kalos">Kalos</a></li>
+      <li><a href="#" data-region-filter="alola">Alola</a></li>
+      
+    </ul>
+  </nav>
+</aside>
 
   <!-- ── Main ── -->
   <main id="main-content" aria-label="Pokédex">
@@ -18,7 +44,7 @@
         <span class="visually-hidden">Zoek Pokémon</span>
         <input type="search" placeholder="Search..." aria-label="Zoek Pokémon" />
       </label>
-      <button class="favourite-toggle" aria-label="Toon alleen favorieten">★</button>
+      <a href="/favorites" class="favourite-toggle" aria-label="Ga naar favorieten">★</a>
     </section>
 
     <!-- Pokémon grid -->
@@ -28,23 +54,23 @@
        
       
          {%   for pokemon in pokemons %}
-          <a tabindex="0" href="#" >
-         <li>
-          <article class="pokemon-card">
-            <figure>
-              <img src="{{ pokemon.sprite }}" alt="" width="70" height="70" loading="lazy" >
-            </figure>
-            <h3>{{ pokemon.name }}</h3>
-            <ul class="types" aria-label="Types">
-              {% for type in pokemon.types %}
-
-              <li><span class="type-badge" data-type="{{ type }}" >{{ type }}</span></li>
-              
-              {% endfor %}
-            </ul>
-          </article>
-        </li>
-        </a>
+          <a tabindex="0" data-region="{{ pokemon.region }}" class="pokemon-link" href="/pokemon-detail/{{ pokemon.id }}">
+  <li>
+    <article class="pokemon-card">
+      <button class="favourite-toggle{% if favoriteIds contains pokemon.id %} is-active{% endif %}" data-id="{{ pokemon.id }}" aria-label="Voeg toe aan favorieten">★</button>
+      <figure>
+  <img src="{{ pokemon.sprite }}" alt="" width="70" height="70" loading="lazy" style="view-transition-name: pokemon-image-{{ pokemon.id }}">
+</figure>
+<h3 style="view-transition-name: pokemon-name-{{ pokemon.id }}">{{ pokemon.name }}</h3>
+     
+      <ul class="types" aria-label="Types">
+        {% for type in pokemon.types %}
+        <li><span class="type-badge" data-type="{{ type }}">{{ type }}</span></li>
+        {% endfor %}
+      </ul>
+    </article>
+  </li>
+     </a>
                {% endfor %}
       </ol>
     </section>
